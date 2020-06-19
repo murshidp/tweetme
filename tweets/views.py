@@ -8,12 +8,19 @@ def home_view(request, *args, **kwargs):
     return HttpResponse("hello world") 
 
 def tweet_detail_view(request, tweet_id, *args, **kwargs):
+    data = {
+        "id":tweet_id,
+        
+    }
+    status=200
     try:
         obj = Tweet.objects.get(id=tweet_id)
+        data['content']=obj.content
     except:
-        raise Http404
-    
-    return HttpResponse(f"<h1>Hello {tweet_id} - {obj.content}")
+        data['message']="Not found"
+        status=404
+   
+    return JsonResponse(data,status=status)
 
 
 
