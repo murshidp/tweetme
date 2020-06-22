@@ -2,8 +2,12 @@
 
 {% block content %}
 <h1>Welcome</h1>
+<div id="tweets">
+  Replace me..
+</div>
 
 <script>
+  const tweetsElement = document.getElementById("tweets")
   const xhr = new XMLHttpRequest()
   const method = 'GET'
   const url = "/tweets"
@@ -13,8 +17,16 @@
   xhr.open(method, url)
   xhr.onload = function(){
     const serverResponse = xhr.response
-    var listeditems = serverResponse.response
-    console.log(listeditems)
+    const listeditems = serverResponse.response
+    var finalStr = ""
+    var i;
+    for(i=0;i<listeditems.length;i++){
+      console.log(i)
+      console.log(listeditems[i])
+      var currentItem = "<div class=mb-4><h1>" + listeditems[i].id + "</h1>" + "<p>" + listeditems[i].content + "</p></div>"
+      finalStr +=currentItem
+    }
+    tweetsElement.innerHTML=finalStr
   }
   xhr.send()
 </script>
